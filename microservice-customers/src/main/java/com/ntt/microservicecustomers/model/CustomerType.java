@@ -19,7 +19,4 @@ public class CustomerType {
     private Long id;
 
     private String typeName;
-
-    @OneToMany(mappedBy = "customerType")
-    private Set<Customer> customers;
 }
