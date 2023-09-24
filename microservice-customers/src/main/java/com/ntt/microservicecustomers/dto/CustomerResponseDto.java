@@ -1,6 +1,9 @@
 package com.ntt.microservicecustomers.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -12,7 +15,8 @@ public class CustomerResponseDto {
     private String address;
     private String phone;
     private String email;
-    private String birthDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
+    private Date birthDate;
     private Long customerTypeId;
     private String customerTypeName;
 }

@@ -18,7 +18,7 @@ public interface CustomerMapper {
     @Mappings({
             @Mapping(source = "customerType.id", target = "customerTypeId"),
             @Mapping(source = "customerType.typeName", target = "customerTypeName"),
-            @Mapping(source = "birthDate", target = "birthDate", dateFormat = "dd-MM-yyyy")
+            @Mapping(source = "birthDate", target = "birthDate", dateFormat = "yyyy-MM-dd")
     })
     CustomerResponseDto toCustomerResponseDto(Customer customer);
     List<CustomerResponseDto> toCustomerResponseDtoList(List<Customer> customers);
