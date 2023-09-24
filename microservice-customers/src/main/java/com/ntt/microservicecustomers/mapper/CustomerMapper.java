@@ -1,5 +1,6 @@
 package com.ntt.microservicecustomers.mapper;
 
+import com.ntt.microservicecustomers.dto.CustomerRequestDto;
 import com.ntt.microservicecustomers.dto.CustomerResponseDto;
 import com.ntt.microservicecustomers.model.Customer;
 import org.mapstruct.Mapper;
@@ -21,4 +22,9 @@ public interface CustomerMapper {
     })
     CustomerResponseDto toCustomerResponseDto(Customer customer);
     List<CustomerResponseDto> toCustomerResponseDtoList(List<Customer> customers);
+
+    @Mappings({
+            @Mapping(source = "customerTypeId", target = "customerType.id")
+    })
+    Customer toCustomer(CustomerRequestDto customerRequestDto);
 }

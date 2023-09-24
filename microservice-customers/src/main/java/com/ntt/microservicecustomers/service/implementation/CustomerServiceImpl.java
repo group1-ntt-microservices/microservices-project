@@ -35,6 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public boolean existsByDocumentNumberAndCustomerType_Id(String documentNumber, Long customerTypeId) {
+        return customerRepository.existsByDocumentNumberAndCustomerType_Id(documentNumber, customerTypeId);
+    }
+
+    @Override
     @Transactional()
     public void deleteById(Long id) {
         customerRepository.deleteById(id);

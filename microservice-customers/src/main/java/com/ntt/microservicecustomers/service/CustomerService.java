@@ -13,6 +13,8 @@ public interface CustomerService {
 
     Customer save(Customer customer);
 
+    boolean existsByDocumentNumberAndCustomerType_Id(String documentNumber, Long customerTypeId);
+
     void deleteById(Long id);
 
 }
