@@ -3,7 +3,6 @@ package com.ntt.microservicecustomers.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +17,6 @@ public class CustomerType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "type_name")
     private String typeName;
 }

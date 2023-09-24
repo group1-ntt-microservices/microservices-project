@@ -18,6 +18,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "document_number")
+    private String documentNumber;
+
     @Column(name = "name")
     private String name;
 

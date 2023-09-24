@@ -1,5 +1,7 @@
 package com.ntt.microservicecustomers.controller;
 
+import com.ntt.microservicecustomers.dto.CustomerResponseDto;
+import com.ntt.microservicecustomers.mapper.CustomerMapper;
 import com.ntt.microservicecustomers.model.Customer;
 import com.ntt.microservicecustomers.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +19,20 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerMapper customerResponseMapper;
+
     @GetMapping("/")
-    public ResponseEntity<List<Customer>> findAll() {
+    public ResponseEntity<List<CustomerResponseDto>> findAll() {
         List<Customer> customers = customerService.findAll();
-        return customers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(customers);
+        return customers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(customerResponseMapper.toCustomerResponseDtoList(customers));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Long id) {
+    public ResponseEntity<CustomerResponseDto> findById(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.findById(id);
         return optionalCustomer.map(
-                        customer -> ResponseEntity.ok().body(customer)).
+                        customer -> ResponseEntity.ok().body(customerResponseMapper.toCustomerResponseDto(customer))).
                 orElseGet(() -> ResponseEntity.notFound().build()
                 );
     }
