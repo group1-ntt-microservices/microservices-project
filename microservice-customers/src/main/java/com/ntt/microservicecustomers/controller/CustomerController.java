@@ -75,6 +75,29 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerMapper.toCustomerResponseDto(customerService.save(customer)));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponseDto> updateCustomer(
+            @PathVariable Long id,
+            @RequestBody CustomerRequestDto customerRequestDto) {
+
+        Optional<Customer> optionalCustomer = customerService.findById(id);
+        if (!optionalCustomer.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Customer existingCustomer = optionalCustomer.get();
+        if (!existingCustomer.getDocumentNumber().equals(customerRequestDto.getDocumentNumber()) ||
+                !existingCustomer.getCustomerType().getId().equals(customerRequestDto.getCustomerTypeId())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
+        Customer updatedCustomer = customerMapper.toCustomer(customerRequestDto);
+        updatedCustomer.setCustomerType(existingCustomer.getCustomerType());
+        updatedCustomer.setId(id);
+        Customer savedCustomer = customerService.save(updatedCustomer);
+        return ResponseEntity.ok(customerMapper.toCustomerResponseDto(savedCustomer));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         Optional<Customer> optionalCustomer = customerService.findById(id);
