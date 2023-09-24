@@ -11,6 +11,8 @@ public interface CustomerService {
 
     Optional<Customer> findById(Long id);
 
+    Optional<Customer> findByDocumentNumberAndCustomerType_Id(String documentNumber, Long customerTypeId);
+
     Customer save(Customer customer);
 
     boolean existsByDocumentNumberAndCustomerType_Id(String documentNumber, Long customerTypeId);

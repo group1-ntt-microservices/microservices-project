@@ -43,6 +43,18 @@ public class CustomerController {
                 );
     }
 
+    @GetMapping("/document")
+    public ResponseEntity<CustomerResponseDto> findByDocumentNumber(
+            @RequestParam("document") String documentNumber,
+            @RequestParam("type") Long customerTypeId)
+    {
+        Optional<Customer> optionalCustomer = customerService.findByDocumentNumberAndCustomerType_Id(documentNumber, customerTypeId);
+        return optionalCustomer.map(
+                customer -> ResponseEntity.ok().body(customerMapper.toCustomerResponseDto(customer))
+        ).orElseGet( () -> ResponseEntity.notFound().build());
+    }
+
+
     @PostMapping("/")
     public ResponseEntity<CustomerResponseDto> save(@RequestBody CustomerRequestDto customerRequestDto) {
         Optional<CustomerType> customerTypeOptional = customerTypeService.findById(customerRequestDto.getCustomerTypeId());
