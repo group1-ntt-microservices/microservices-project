@@ -54,6 +54,12 @@ public class CustomerController {
         ).orElseGet( () -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/document/{documentNumber}")
+    public ResponseEntity<List<CustomerResponseDto>> findByDocumentNumber(@PathVariable String documentNumber){
+        List<Customer> customers = customerService.findByDocumentNumber(documentNumber);
+        return customers.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(customerMapper.toCustomerResponseDtoList(customers));
+    }
+
 
     @PostMapping("/")
     public ResponseEntity<CustomerResponseDto> save(@RequestBody CustomerRequestDto customerRequestDto) {

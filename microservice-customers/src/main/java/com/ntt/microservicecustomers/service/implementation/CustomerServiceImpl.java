@@ -35,6 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Customer> findByDocumentNumber(String documentNumber) {
+        return customerRepository.findByDocumentNumber(documentNumber);
+    }
+
+    @Override
     @Transactional()
     public Customer save(Customer customer) {
         return customerRepository.save(customer);
